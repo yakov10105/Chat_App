@@ -29,6 +29,8 @@ namespace Chat_App.Models
         [ForeignKey("Reciever"), Column(Order = 1)]
         public int RecieverId { get; set; }
 
+        public int IdanBranch { get; set; }
+
         public virtual User Sender { get; set; }
 
         public virtual User Reciever { get; set; }
