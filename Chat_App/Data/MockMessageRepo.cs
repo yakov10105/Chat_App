@@ -9,7 +9,7 @@ namespace Chat_App.Data
     {
        public IEnumerable<Message> GetAllMessages()
         {
-
+            throw new NotImplementedException();
         }
     }
 }

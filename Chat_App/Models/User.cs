@@ -8,7 +8,7 @@ namespace Chat_App.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage ="First Name field is required.")]
@@ -53,10 +53,12 @@ namespace Chat_App.Models
 
         public int WinCoins { get; set; } = 0;
 
-        public IEnumerable<Message> Messages { get; set; }
+        public virtual ICollection<Message> SendedMessages { get; set; }
 
-        public IEnumerable<User> Friends { get; set; }
+        public virtual ICollection<Message> RecievedMessages { get; set; }
 
-        public IEnumerable<Room> Rooms { get; set; }
+        //public virtual ICollection<User> Friends { get; set; }
+        public int RoomId { get; set; }
+        public virtual Room Room { get; set; }
     }
 }
