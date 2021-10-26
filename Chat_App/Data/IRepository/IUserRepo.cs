@@ -8,6 +8,8 @@ namespace Chat_App.Data
 	public interface IUserRepo
 	{
 		IEnumerable<User> GetAllUsers();
+
+		User GetUserById(int id);
 	}
 }
 

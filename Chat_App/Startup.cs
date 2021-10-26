@@ -1,3 +1,4 @@
+using Chat_App.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -25,6 +26,8 @@ namespace Chat_App
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddSignalR();
         }
