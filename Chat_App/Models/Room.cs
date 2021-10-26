@@ -8,7 +8,7 @@ namespace Chat_App.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RoomId { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Room Name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "The room name cannot be empty.")]
@@ -17,8 +17,8 @@ namespace Chat_App.Models
 
         public bool IsGameOn { get; set; } = false;
 
-        public IEnumerable<User> Members { get; set; }
+        public virtual ICollection<User> Members { get; set; }
 
-        public IEnumerable<Message> Messages { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }
