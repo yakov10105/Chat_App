@@ -1,4 +1,6 @@
 using Chat_App.Data.DbConfig;
+using Chat_App.Data.IRepository;
+using Chat_App.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -33,7 +35,9 @@ namespace Chat_App
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddScoped<IUserRepository,UserService>();
             services.AddSignalR();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ChatAppDbContext dbContext)
@@ -45,6 +49,7 @@ namespace Chat_App
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+
 
             app.UseEndpoints(endpoints =>
             {

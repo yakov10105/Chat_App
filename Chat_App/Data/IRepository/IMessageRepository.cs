@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System;
 
 
-namespace Chat_App.Data
+namespace Chat_App.Data.IRepository
 {
-    public interface IMessageRepo
+    public interface IMessageRepositpry
     {
         IEnumerable<Message> GetAllMessages();
+
+        Message GetMessageById(int id);
     }
 }
-
-
