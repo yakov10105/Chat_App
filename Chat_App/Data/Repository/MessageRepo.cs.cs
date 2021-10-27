@@ -5,9 +5,14 @@ using System;
 
 namespace Chat_App.Data
 {
-    public class MockMessageRepo : IMessageRepo
+    public class MessageRepo : IMessageRepo
     {
        public IEnumerable<Message> GetAllMessages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Message GetMessageById(int id)
         {
             throw new NotImplementedException();
         }

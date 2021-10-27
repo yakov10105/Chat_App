@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Chat_App.Models
+namespace Chat_App.Dtos
 {
-    public class User
+    public class UserUpdateDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First Name field is required.")]
         [StringLength(30)]
@@ -49,16 +47,9 @@ namespace Chat_App.Models
         [Compare("Password", ErrorMessage = "Incompatible passwords.")]
         public string ConfirmPassword { get; set; }//why we need the password twice
 
-        public bool IsOnline { get; set; }
-
-        public int WinCoins { get; set; } = 0; // why to make it 0?
-
-        public virtual ICollection<Message> SendedMessages { get; set; }
-
-        public virtual ICollection<Message> RecievedMessages { get; set; }
+        public int WinCoins { get; set; }
 
         public int RoomId { get; set; }
 
-        public virtual Room Room { get; set; }
     }
 }

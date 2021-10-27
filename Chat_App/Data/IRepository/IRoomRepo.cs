@@ -8,6 +8,8 @@ namespace Chat_App.Data
     public interface IRoomRepo
     {
         IEnumerable<Room> GetAllRooms();
+
+        Room GetRoomById(int id);
     }
 }
 
