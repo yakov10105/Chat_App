@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 
-namespace Chat_App.Data.IRepository
+namespace Chat_App.Data.Repository
 {
     public interface IMessageRepositpry
     {

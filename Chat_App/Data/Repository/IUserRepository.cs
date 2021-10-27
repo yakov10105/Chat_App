@@ -1,7 +1,7 @@
 ﻿using Chat_App.Models;
 using System.Collections.Generic;
 
-namespace Chat_App.Data.IRepository
+namespace Chat_App.Data.Repository
 {
     public interface IUserRepository
     {

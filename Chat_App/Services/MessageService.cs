@@ -1,4 +1,4 @@
-﻿using Chat_App.Data.IRepository;
+﻿using Chat_App.Data.Repository;
 using Chat_App.Models;
 using System;
 using System.Collections.Generic;

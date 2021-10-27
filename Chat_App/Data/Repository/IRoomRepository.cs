@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Chat_App.Data.IRepository
+namespace Chat_App.Data.Repository
 {
     interface IRoomRepository
     {
