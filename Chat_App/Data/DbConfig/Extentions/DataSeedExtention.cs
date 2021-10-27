@@ -37,7 +37,7 @@ namespace Chat_App.Data.DbConfig.Extentions
             {
                 Id = 2,
                 FirstName = "Idan",
-                LastName = "Barzilai",
+                LastName = "Barzilay",
                 UserName = "Idan111",
                 UserEmail = "Idan@gmail.com",
                 Password = "1234",

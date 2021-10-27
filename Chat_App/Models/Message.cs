@@ -14,7 +14,7 @@ namespace Chat_App.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Message cannot be empty.")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Message cannot be empty.")]
         [StringLength(300, ErrorMessage = "Max Message length : 300 chars.")]
         [DataType(DataType.MultilineText)]
         public string Text { get; set; }
@@ -23,7 +23,7 @@ namespace Chat_App.Models
         [DataType(DataType.DateTime)]
         public DateTime Date { get; set; }
 
-        public virtual User Sender { get; set; }   
+        public virtual User Sender { get; set; }
         public virtual User Reciever { get; set; }
 
         public int SenderId { get; set; }

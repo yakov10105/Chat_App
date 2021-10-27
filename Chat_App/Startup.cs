@@ -1,3 +1,6 @@
+using System;
+using AutoMapper;
+using Chat_App.Data;
 using Chat_App.Data.DbConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace Chat_App
 {
@@ -21,17 +25,18 @@ namespace Chat_App
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //DB Configuration : 
+            //DB Configuration :
             var connString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ChatAppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connString));
 
+            services.AddControllers()
+                    .AddNewtonsoftJson(s => s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
-            services.AddControllersWithViews();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
+            services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/build");
+
+            services.AddScoped<IUserRepo, UserRepo>();
 
             services.AddSignalR();
         }

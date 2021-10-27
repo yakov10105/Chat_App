@@ -34,11 +34,11 @@ namespace Chat_App.Data.DbConfig
                 .HasForeignKey(u => u.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Room)
-                .WithMany(r => r.Members);
-            //modelBuilder.Entity<Room>()
-            //    .HasMany
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.Room)
+            //    .WithMany(r => r.Members);
+            ////modelBuilder.Entity<Room>()
+            ////    .HasMany
 
 
             modelBuilder.SeedData();
