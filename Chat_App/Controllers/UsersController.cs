@@ -2,6 +2,7 @@
 using Chat_App.Data;
 using Chat_App.Dtos;
 using Chat_App.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -74,5 +75,48 @@ namespace Chat_App.Controllers
 
             return NoContent();
         }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialUserUpdate(int id, JsonPatchDocument<UserUpdateDto> patchDocument)
+        {
+            var userModelFromRepo = _repository.GetUserById(id);
+            if (userModelFromRepo == null)//check that we have this user in the Database
+            {
+                return NotFound();
+            }
+
+            var userToPatch = _mapper.Map<UserUpdateDto>(userModelFromRepo);// Generating a new UserUpdateDto
+            patchDocument.ApplyTo(userToPatch, ModelState);// Insert it to our user
+
+            if (!TryValidateModel(userToPatch))//Validition check
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(userToPatch, userModelFromRepo);//updating  user
+
+            _repository.UpdateUser(userModelFromRepo);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+            var userModelFromRepo = _repository.GetUserById(id);
+            if (userModelFromRepo == null)//check that we have this user in the Database
+            {
+                return NotFound();
+            }
+
+            _repository.DeleteUser(userModelFromRepo);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
     }
 }

@@ -16,6 +16,7 @@ namespace Chat_App.Profiles
             CreateMap<User, UserReadDto>();
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>();
+            CreateMap<User, UserUpdateDto>();
         }
 
     }

@@ -21,6 +21,15 @@ namespace Chat_App.Data
             _context.Users.Add(user);
         }
 
+        public void DeleteUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentException(nameof(user));
+            }
+            _context.Users.Remove(user);
+        }
+
         public IEnumerable<User> GetAllUsers() => _context.Users.ToList();
 
         public User GetUserById(int id) => _context.Users.FirstOrDefault(u => u.Id == id);
@@ -29,7 +38,7 @@ namespace Chat_App.Data
 
         public void UpdateUser(User user)
         {
-            //Nothing
+            //Nothing the Database will take care of that
         }
     }
 }

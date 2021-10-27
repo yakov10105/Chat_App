@@ -13,6 +13,7 @@ namespace Chat_App.Data
 		User GetUserById(int id);
 		void CreateUser(User user);
 		void UpdateUser(User user);
+		void DeleteUser(User user);
 	}
 }
 

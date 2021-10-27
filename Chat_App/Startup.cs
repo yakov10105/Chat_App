@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Chat_App.Data;
 using Chat_App.Data.DbConfig;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using Newtonsoft.Json.Serialization;
 
 namespace Chat_App
 {
@@ -27,8 +28,9 @@ namespace Chat_App
             //DB Configuration :
             var connString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ChatAppDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(connString));
-            
-            services.AddControllers();
+
+            services.AddControllers()
+                    .AddNewtonsoftJson(s => s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
