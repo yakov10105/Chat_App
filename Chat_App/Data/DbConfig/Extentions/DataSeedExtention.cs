@@ -25,7 +25,7 @@ namespace Chat_App.Data.DbConfig.Extentions
                 LastName = "Kantor",
                 UserName = "Yakov10105",
                 UserEmail = "Yakov@gmail.com",
-                Password = "1234",
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                 ConfirmPassword = "1234",
                 UserAge = 22,
                 RecievedMessages = new List<Message>(),
@@ -40,24 +40,14 @@ namespace Chat_App.Data.DbConfig.Extentions
                 LastName = "Barzilay",
                 UserName = "Idan111",
                 UserEmail = "Idan@gmail.com",
-                Password = "1234",
+                Password = BCrypt.Net.BCrypt.HashPassword("123456"),
                 ConfirmPassword = "1234",
                 UserAge = 22,
                 RecievedMessages = new List<Message>(),
                 SendedMessages = new List<Message>(),
                 RoomId=1
             };
-            Message message = new Message
-            {
-                Id = 1,
-                Date = DateTime.Now,
-                RecieverId = 2,
-                SenderId = 1,
-                Text = "Asfadsfwadfgdwfv",
-                
-            };
             builder.Entity<User>().HasData(idan,yakov);
-            builder.Entity<Message>().HasData(message);
             builder.Entity<Room>().HasData(room);
         }
     }

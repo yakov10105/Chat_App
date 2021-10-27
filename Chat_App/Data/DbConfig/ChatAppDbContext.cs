@@ -27,6 +27,9 @@ namespace Chat_App.Data.DbConfig
                 .HasForeignKey(u => u.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Room>()
+                .HasMany(r => r.Members)
+                .WithOne(m => m.Room);
 
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
@@ -34,11 +37,13 @@ namespace Chat_App.Data.DbConfig
                 .HasForeignKey(u => u.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.Room)
-            //    .WithMany(r => r.Members);
-            ////modelBuilder.Entity<Room>()
-            ////    .HasMany
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserEmail)
+                .IsUnique();
 
 
             modelBuilder.SeedData();

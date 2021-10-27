@@ -2,6 +2,7 @@
 using Chat_App.Data;
 using Chat_App.Dtos;
 using Chat_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

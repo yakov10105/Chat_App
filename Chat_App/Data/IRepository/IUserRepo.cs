@@ -11,6 +11,7 @@ namespace Chat_App.Data
 
 		IEnumerable<User> GetAllUsers();
 		User GetUserById(int id);
+		User GetUserByUserName(string userName);
 		void CreateUser(User user);
 		void UpdateUser(User user);
 		void DeleteUser(User user);
