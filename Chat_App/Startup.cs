@@ -1,5 +1,4 @@
 using Chat_App.Data.DbConfig;
-using Chat_App.Data.IRepository;
 using Chat_App.Data.Repository;
 using Chat_App.Services;
 using Microsoft.AspNetCore.Builder;
