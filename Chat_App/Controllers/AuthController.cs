@@ -10,45 +10,37 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Chat_App.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthenticationService _iAuthService;
-        private readonly IJwtService _iJwtService;
-        private readonly IUserRepo _iUserRepo;
 
-        public AuthController(IAuthenticationService iAuth, IJwtService iJwtService, IUserRepo iUserRepo)
+        public AuthController(IAuthenticationService iAuth)
         {
             _iAuthService = iAuth;
-            _iJwtService = iJwtService;
-            _iUserRepo = iUserRepo;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] UserLoginDto loginUser)
         {
-            var user = _iAuthService.AuthenticateEmail(loginUser);
-            if (user == null) return BadRequest(error: new { message = "Invalid Cardentials" });
-            if (!_iAuthService.AuthenticatePassword(loginUser, user))
-                return BadRequest(error: new { message = "Invalid Cardentials" });
+            var token = _iAuthService.Authenticate(loginUser);
 
-            var jwtKey = _iJwtService.Generate(user.Id);
-
-            Response.Cookies.Append("jwt", jwtKey, new CookieOptions
+            if (token != null)
             {
-                HttpOnly = true
-            });
+                HttpContext.Response.Headers.Add("Authorization", $"Bearer {token}");
+                Request.Headers.Add("Authorization", $"Bearer {token}");
 
-            return Ok(new
-            {
-                message = "Success"
-            });
+                return Ok(new {message ="Connected !" });
+            }
+            return Unauthorized();
 
         }
 
@@ -58,41 +50,12 @@ namespace Chat_App.Controllers
         {
             return Created("Success", _iAuthService.RegisterUser(regUser));
         }
+
         [Authorize]
         [HttpGet("user")]
         public IActionResult User()
         {
-            //try
-            //{
-            //    var jwt = Request.Cookies["jwt"];
-
-            //    var token = _iJwtService.Verify(jwt);
-
-            //    int userId = int.Parse(token.Issuer);
-
-            //    var user = _iUserRepo.GetUserById(userId);
-
-            //    var sUser = new UserReadDto
-            //    {
-            //        FirstName = user.FirstName,
-            //        LastName = user.LastName,
-            //        Id = user.Id,
-            //        IsOnline = user.IsOnline,
-            //        RoomId = user.RoomId,
-            //        UserAge = user.UserAge,
-            //        UserEmail = user.UserEmail,
-            //        UserName = user.UserName,
-            //        WinCoins = user.WinCoins
-            //    };
-
-            //    return Ok(sUser);
-            //}
-            //catch (Exception)
-            //{
-            //    return Unauthorized();
-            //}
             return Ok(new { authorized = "Successs" });
-
         }
     }
 

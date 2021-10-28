@@ -30,6 +30,7 @@ namespace Chat_App
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var key = "Sercret Key sadfgswdgfwsgwreg";
             services.AddCors();
             //DB Configuration :
             var connString = Configuration.GetConnectionString("DefaultConnection");
@@ -44,27 +45,26 @@ namespace Chat_App
 
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IJwtService, JwtService>();
 
             services.AddSignalR();
-            var key = "Sercret Key";
             services.AddAuthentication(x=> 
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
                 {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
+                        ValidateIssuerSigningKey=true,
+                        IssuerSigningKey= new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+                        ValidateIssuer=false,
+                        ValidateAudience=false
+
                     };
                 });
+            services.AddSingleton<IJwtService>(new JwtService(key));
             services.AddMvc();
          
         }
@@ -79,15 +79,16 @@ namespace Chat_App
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseCors(options => options
-                .WithOrigins(new[] {"http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
+                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
                 );
 
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

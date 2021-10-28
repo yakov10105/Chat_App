@@ -14,6 +14,8 @@ namespace Chat_App.Services.Auth
 
         bool AuthenticatePassword(UserLoginDto loginUser, User systemUser);
 
+        string Authenticate(UserLoginDto loginUser);
+
         User RegisterUser(UserRegisterDto regUser);
     }
 }
