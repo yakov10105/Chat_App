@@ -58,40 +58,40 @@ namespace Chat_App.Controllers
         {
             return Created("Success", _iAuthService.RegisterUser(regUser));
         }
-
+        [Authorize]
         [HttpGet("user")]
         public IActionResult User()
         {
-            try
-            {
-                var jwt = Request.Cookies["jwt"];
+            //try
+            //{
+            //    var jwt = Request.Cookies["jwt"];
 
-                var token = _iJwtService.Verify(jwt);
+            //    var token = _iJwtService.Verify(jwt);
 
-                int userId = int.Parse(token.Issuer);
+            //    int userId = int.Parse(token.Issuer);
 
-                var user = _iUserRepo.GetUserById(userId);
+            //    var user = _iUserRepo.GetUserById(userId);
 
-                var sUser = new UserReadDto
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Id = user.Id,
-                    IsOnline = user.IsOnline,
-                    RoomId = user.RoomId,
-                    UserAge = user.UserAge,
-                    UserEmail = user.UserEmail,
-                    UserName = user.UserName,
-                    WinCoins = user.WinCoins
-                };
+            //    var sUser = new UserReadDto
+            //    {
+            //        FirstName = user.FirstName,
+            //        LastName = user.LastName,
+            //        Id = user.Id,
+            //        IsOnline = user.IsOnline,
+            //        RoomId = user.RoomId,
+            //        UserAge = user.UserAge,
+            //        UserEmail = user.UserEmail,
+            //        UserName = user.UserName,
+            //        WinCoins = user.WinCoins
+            //    };
 
-                return Ok(sUser);
-            }
-            catch (Exception)
-            {
-                return Unauthorized();
-            }
-
+            //    return Ok(sUser);
+            //}
+            //catch (Exception)
+            //{
+            //    return Unauthorized();
+            //}
+            return Ok(new { authorized = "Successs" });
 
         }
     }
